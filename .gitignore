@@ -1,2 +1,4 @@
 # Project exclude paths
-/cache-demo/target/
+**/target/
+**/.idea
+*.iml
