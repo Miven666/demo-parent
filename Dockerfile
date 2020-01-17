@@ -1,4 +1,4 @@
-FROM centos7.5:openJDK
+FROM openjdk:8
 VOLUME /tmp
 ADD hello-world/target/hello-world.jar hello-world.jar
 EXPOSE 8080
