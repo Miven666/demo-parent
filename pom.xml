@@ -12,6 +12,8 @@
     <modules>
         <!--<module>cache-demo</module>-->
         <module>hello-world</module>
+        <module>class-load</module>
+        <module>concurrent-rest</module>
     </modules>
 
     <properties>
@@ -34,4 +36,12 @@
             </snapshots>
         </repository>
     </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.7</version>
+        </dependency>
+    </dependencies>
 </project>
