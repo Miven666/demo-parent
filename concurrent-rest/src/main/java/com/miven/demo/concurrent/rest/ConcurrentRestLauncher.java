@@ -41,15 +41,16 @@ public class ConcurrentRestLauncher {
         return args -> {
             RestTemplate restTemplate = restTemplateBuilder.build();
             ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-            executor.setCorePoolSize(30);
+            executor.setCorePoolSize(3);
             executor.setMaxPoolSize(60);
-            executor.setQueueCapacity(100000);
+            executor.setQueueCapacity(10);
             executor.setThreadNamePrefix("concurrent-rest-task-");
             executor.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardPolicy());
             executor.initialize();
 
-            for (int i = 0; i < 100000; i++) {
+            for (int i = 0; i < 100; i++) {
                 int deviceId = new Random().nextInt();
+                int finalI = i;
                 executor.execute(() -> {
                     String uri = "http://localhost:20095/login/miguTokenLogin/v2?clientId=sssss--s-ss";
                     HttpHeaders headers = new HttpHeaders();
@@ -65,7 +66,17 @@ public class ConcurrentRestLauncher {
                     HttpEntity<Object> httpEntity = new HttpEntity<>(request, headers);
                     BaseResponse response = restTemplate.postForEntity(uri, httpEntity, BaseResponse.class).getBody();
                     log.info(JSON.toJSONString(response));
+
+                    log.info(finalI + "-" + Thread.currentThread().getName() + "-" + deviceId);
+                    try {
+                        Thread.sleep(20000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 });
+                log.info("QueueCapacity === " + executor.getThreadPoolExecutor().getQueue().size());
+                log.info(String.valueOf(i));
+                Thread.sleep(500);
             }
 
         };
