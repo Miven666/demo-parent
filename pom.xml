@@ -15,6 +15,7 @@
         <module>class-load</module>
         <module>concurrent-rest</module>
         <module>nio-demo</module>
+        <module>snapshot-demo</module>
     </modules>
 
     <properties>
